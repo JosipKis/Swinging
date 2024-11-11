@@ -2,9 +2,7 @@ package Controller;
 
 import Model.DatabaseConfig;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Controller {
 
@@ -38,6 +36,22 @@ public class Controller {
             con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void getUserDetailsBySector(String sector){
+        if (con != null) {
+            String query = "SELECT logs.user_id FROM logs WHERE tablica = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)){
+                ps.setString(1, sector);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    System.out.println(rs.getString("user_id"));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -23,8 +23,8 @@ public class DatabaseConfig {
         }
 
         this.DB_URL = properties.getProperty("DB_URL");
-        this.DB_USERNAME = properties.getProperty("DB_PASS");
-        this.DB_PASSWORD = properties.getProperty("DB_USER");
+        this.DB_USERNAME = properties.getProperty("DB_USER");
+        this.DB_PASSWORD = properties.getProperty("DB_PASS");
     }
 
     public String getDbUrl() {
