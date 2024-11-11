@@ -27,6 +27,9 @@ public class MainFrame extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridy = 0;
 
+        add(new JLabel("Izaberite sektor:"), gbc);
+        gbc.gridy++;
+
         add(tablicaSelectPanel, gbc);
         gbc.gridy++;
     }
