@@ -1,4 +1,4 @@
-import Model.MainFrame;
+import View.MainFrame;
 
 import javax.swing.*;
 
