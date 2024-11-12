@@ -5,21 +5,21 @@ import java.util.List;
 
 public class DataBase {
 
-    private List<String> userIds;
+    private List<String> logData;
 
     public DataBase() {
-        userIds = new ArrayList<>();
+        logData = new ArrayList<>();
     }
 
     public void addUser(String userId) {
-        userIds.add(userId);
+        logData.add(userId);
     }
 
-    public List<String> getUserIds() {
-        return userIds;
+    public List<String> getLogData() {
+        return logData;
     }
 
     public void clearUserIdList(){
-        userIds.clear();
+        logData.clear();
     }
 }

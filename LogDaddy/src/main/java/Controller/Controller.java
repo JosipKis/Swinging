@@ -45,19 +45,21 @@ public class Controller {
     public List<String> getUserDetailsBySector(String sector){
         if (con != null) {
             dataBase.clearUserIdList();
-            String query = "SELECT logs.user_id FROM logs WHERE tablica = ?";
+            String query = "SELECT logs.user_id, logs.vrsta FROM logs WHERE tablica = ?";
             try (PreparedStatement ps = con.prepareStatement(query)){
                 ps.setString(1, sector);
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    dataBase.addUser(rs.getString("user_id"));
+                    String userData = rs.getString("user_id");
+                    userData += ", " + rs.getString("vrsta");
+                    dataBase.addUser(userData);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return dataBase.getUserIds();
+        return dataBase.getLogData();
     }
 
     public static Controller getControllerInstance(){
