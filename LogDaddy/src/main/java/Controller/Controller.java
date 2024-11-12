@@ -1,8 +1,10 @@
 package Controller;
 
+import Model.DataBase;
 import Model.DatabaseConfig;
 
 import java.sql.*;
+import java.util.List;
 
 public class Controller {
 
@@ -13,10 +15,11 @@ public class Controller {
     private final String DB_USR = databaseConfig.getDbUsername();
     private final String DB_PWD = databaseConfig.getDbPassword();
 
+    private DataBase dataBase;
     public static Controller controller = new Controller();
 
     private Controller(){
-
+        dataBase = new DataBase();
     }
 
     public void connectToDatabase() {
@@ -39,20 +42,22 @@ public class Controller {
         }
     }
 
-    public void getUserDetailsBySector(String sector){
+    public List<String> getUserDetailsBySector(String sector){
         if (con != null) {
+            dataBase.clearUserIdList();
             String query = "SELECT logs.user_id FROM logs WHERE tablica = ?";
             try (PreparedStatement ps = con.prepareStatement(query)){
                 ps.setString(1, sector);
                 ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
-                    System.out.println(rs.getString("user_id"));
+                    dataBase.addUser(rs.getString("user_id"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
+        return dataBase.getUserIds();
     }
 
     public static Controller getControllerInstance(){

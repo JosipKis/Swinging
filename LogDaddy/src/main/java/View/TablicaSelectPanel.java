@@ -3,6 +3,7 @@ package View;
 import Controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,8 @@ public class TablicaSelectPanel extends JPanel {
 
     private JComboBox<String> comboBox;
     private JComboBox<String> comboBoxUsers;
+
+    private String[] userList;
 
     private Controller controller;
 
@@ -28,10 +31,22 @@ public class TablicaSelectPanel extends JPanel {
         comboBox.setSelectedIndex(-1);
 
         comboBoxUsers = new JComboBox<>();
+
     }
 
     private void layoutComps() {
-        add(comboBox);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        add(comboBox, gbc);
+        gbc.gridy++;
+
+        add(new JLabel("Korisnik: "), gbc);
+        gbc.gridy++;
+
+        add(comboBoxUsers, gbc);
     }
 
     private void activateComps(){
@@ -39,6 +54,13 @@ public class TablicaSelectPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("Selected item: " + comboBox.getSelectedItem());
                 controller.getUserDetailsBySector(comboBox.getSelectedItem().toString());
+                userList = new String[controller.getUserDetailsBySector(comboBox.getSelectedItem().toString()).size()];
+                for (int i = 0; i < userList.length; i++) {
+                    userList[i] = controller.getUserDetailsBySector(comboBox.getSelectedItem().toString()).get(i);
+                    System.out.println(userList[i]);
+                }
+                ComboBoxModel<String> userModel = new DefaultComboBoxModel<>(userList);
+                comboBoxUsers.setModel(userModel);
             }
         });
     }
