@@ -53,10 +53,10 @@ public class TablicaSelectPanel extends JPanel {
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("Selected item: " + comboBox.getSelectedItem());
-                controller.getUserDetailsBySector(comboBox.getSelectedItem().toString());
-                userList = new String[controller.getUserDetailsBySector(comboBox.getSelectedItem().toString()).size()];
+                controller.getUserIdBySector(comboBox.getSelectedItem().toString());
+                userList = new String[controller.getUserIdBySector(comboBox.getSelectedItem().toString()).size()];
                 for (int i = 0; i < userList.length; i++) {
-                    userList[i] = controller.getUserDetailsBySector(comboBox.getSelectedItem().toString()).get(i);
+                    userList[i] = controller.getUserIdBySector(comboBox.getSelectedItem().toString()).get(i);
                     System.out.println(userList[i]);
                 }
                 ComboBoxModel<String> userModel = new DefaultComboBoxModel<>(userList);
