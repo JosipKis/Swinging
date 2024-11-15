@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.StudentData;
 import Model.UserData;
 
 import javax.swing.*;
@@ -68,18 +69,30 @@ public class TablicaSelectPanel extends JPanel {
         comboBoxUsers.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent ae) {
                UserData userData;
+               StudentData studentData;
                switch (comboBox.getSelectedItem().toString()) {
                    case "Student-servis":
                        System.out.println("Student servis");
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       studentData = controller.getStudentServisByID(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(studentData.toString());
                        break;
                    case "Sektor komercijale":
                        System.out.println("Sektor komercijale");
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       userData = controller.getSektorKomercijaleByID(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(userData.toString());
                        break;
                    case "Sektor Tehnike, razvoja i održavanja":
                        System.out.println("Sektor tehnike");
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       userData = controller.getSektorTehnikeByID(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(userData.toString());
                        break;
                    case "Prometno operativni sektor":
-                       System.out.println("Prometno operativni sektor");
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       userData = controller.getPrometnoOpSektorByID(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(userData.toString());
                        break;
                    case "Radnici na određeno":
                        System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
