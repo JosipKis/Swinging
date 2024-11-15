@@ -113,6 +113,20 @@ public class UserData {
         this.isplataGo = isplataGo;
     }
 
+    public void nullAll(){
+        this.name = null;
+        this.address = null;
+        this.dateEnd = null;
+        this.napomena = null;
+        this.oib = null;
+        this.dateBegin = null;
+        this.workPlace = null;
+        this.workPlaceCode = null;
+        this.service = null;
+        this.status = null;
+        this.isplataGo = null;
+    }
+
     @Override
     public String toString() {
         return "UserData{" +

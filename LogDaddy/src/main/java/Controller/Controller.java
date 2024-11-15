@@ -17,10 +17,12 @@ public class Controller {
     private final String DB_PWD = databaseConfig.getDbPassword();
 
     private DataBase dataBase;
+    private UserData userData;
     public static Controller controller = new Controller();
 
     private Controller(){
         dataBase = new DataBase();
+        userData = new UserData();
     }
 
     public void connectToDatabase() {
@@ -63,9 +65,9 @@ public class Controller {
     }
 
     // napraviti upis na svaku od sektora, sa switch case ces risit koju zvati !!!
-    public List<UserData> getOdredeniUserByID(String id){
+    public UserData getOdredeniUserByID(String id){
+        userData.nullAll();
         if (con != null) {
-            dataBase.clearUserData();
             String query = "SELECT * FROM odredeno_radnici WHERE id = ?";
 
             try (PreparedStatement ps = con.prepareStatement(query)){
@@ -73,7 +75,6 @@ public class Controller {
 
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    UserData userData = new UserData();
 
                     userData.setId(Integer.parseInt(id));
                     userData.setName(rs.getString("ime_i_prezime"));
@@ -87,15 +88,45 @@ public class Controller {
                     userData.setStatus((rs.getString("status")));
                     userData.setDateBegin(rs.getDate("datum_pocetka"));
                     userData.setDateEnd(rs.getDate("kraj_rada"));
-
-                    dataBase.addUserToList(userData);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        return dataBase.getUserData();
+        return userData;
+    }
+
+    public UserData getNeodredeniById(String id){
+        userData.nullAll();
+        if (con != null) {
+            String query = "SELECT * FROM neodredeno_radnici WHERE id = ?";
+
+            try (PreparedStatement ps = con.prepareStatement(query)){
+                ps.setString(1, id);
+
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    // umjesto statusa; opis, umjesto datum_kraja; datum_promjene
+                    userData.setId(Integer.parseInt(id));
+                    userData.setName(rs.getString("ime_i_prezime"));
+                    userData.setAddress(rs.getString("adresa_ulica") + rs.getString("adresa_grad"));
+                    userData.setIsplataGo(rs.getString("isplata_go"));
+                    userData.setNapomena(rs.getString("napomena"));
+                    userData.setOib(rs.getString("oib"));
+                    userData.setWorkPlace(rs.getString("radno_mjesto"));
+                    userData.setWorkPlaceCode(rs.getString("sifra_rm"));
+                    userData.setService(rs.getString("sluzba"));
+                    userData.setStatus((rs.getString("opis")));
+                    userData.setDateBegin(rs.getDate("datum_pocetka"));
+                    userData.setDateEnd(rs.getDate("datum_promjene"));
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return userData;
     }
 
 

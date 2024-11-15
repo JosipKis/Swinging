@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.UserData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,6 +63,36 @@ public class TablicaSelectPanel extends JPanel {
                 ComboBoxModel<String> userModel = new DefaultComboBoxModel<>(userList);
                 comboBoxUsers.setModel(userModel);
             }
+        });
+
+        comboBoxUsers.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent ae) {
+               UserData userData;
+               switch (comboBox.getSelectedItem().toString()) {
+                   case "Student-servis":
+                       System.out.println("Student servis");
+                       break;
+                   case "Sektor komercijale":
+                       System.out.println("Sektor komercijale");
+                       break;
+                   case "Sektor Tehnike, razvoja i održavanja":
+                       System.out.println("Sektor tehnike");
+                       break;
+                   case "Prometno operativni sektor":
+                       System.out.println("Prometno operativni sektor");
+                       break;
+                   case "Radnici na određeno":
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       userData = controller.getOdredeniUserByID(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(userData.toString());
+                       break;
+                   case "Radnici na neodređeno":
+                       System.out.println("Selected user: " + comboBoxUsers.getSelectedItem());
+                       userData = controller.getNeodredeniById(comboBoxUsers.getSelectedItem().toString());
+                       System.out.println(userData.toString());
+                       break;
+               }
+           }
         });
     }
 }
